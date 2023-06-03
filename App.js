@@ -23,10 +23,11 @@ export default function App() {
     setContacts(data);
   };
   const ContactToDisplay = contacts.filter((contact) => {
-    ///this filters the contact to display, kinda 2 in 1 job, shows every contact when no query||shows filtered contacts which pass the query  
-    const fullName = `${contact.firstName}+${contact.lastName}`.toLowerCase();
-    return fullName.includes(searchTerm.toLowerCase());
+    //prev implementation was filtering every substring search provided to it, many edges cases, Fixed it with startsWith()
+    const fullName = `${contact.firstName} ${contact.lastName}`;
+    return fullName.toLowerCase().startsWith(searchTerm.toLowerCase());
   });
+  
   const ContactItem = ({ item }) => (
     //this is just to iterate over flatlist ig? picked this from native docs
     <View style={{ minHeight: 70, padding: 5 }}>
