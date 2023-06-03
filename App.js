@@ -1,23 +1,29 @@
 import {useEffect} from 'react';
 import {Text, View ,TextInput } from 'react-native';
-import * as Permissions from 'expo-permissions';
 import * as Contacts from 'expo-contacts';
-
-
 export default function App() {
+  {
+    /*
+As this blog by Brent Vatne says,
+expo-permissions has been deprecated in favor of module-specific permissions methods You should migrate from using Permissions.askAsync and Permissions.getAsync to the permissions methods exported by modules that require the permissions.
+For example: you should replace calls to Permissions.askAsync(Permissions.CAMERA) with Camera.requestPermissionsAsync()
+There shouldn’t be two ways to do an identical thing in a single SDK, and so we picked our preferred approach and are consolidating around it.
+*/
+  }
  const loadContacts = async () => {
-    const permission = await Permissions.askAsync(Permissions.CONTACTS);
-    console.log("inside permission");
-  if (permission.status !== 'granted') {
+    const permission = await Contacts.requestPermissionsAsync();
+    {
+      //fixed the deprecated way of fetching pemission
+    }
+    if (permission.status !== 'granted') {
       return;
     }
 
     const { data } = await Contacts.getContactsAsync({
-      fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Emails]
+      fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Emails]  
     });
 
     console.log(data);
-    console.log("inside loadcontact");
     };
   useEffect(() => {
     {
