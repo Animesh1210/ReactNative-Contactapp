@@ -1,8 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,TextInput,SafeAreaView,ScrollView } from 'react-native';
+import {useEffect} from 'react';
+import {Text, View ,TextInput } from 'react-native';
+import * as Permissions from 'expo-permissions';
+import * as Contacts from 'expo-contacts';
+
 
 export default function App() {
-  return (
+ const loadContacts = async () => {
+    const permission = await Permissions.askAsync(Permissions.CONTACTS);
+    console.log("inside permission");
+  if (permission.status !== 'granted') {
+      return;
+    }
+
+    const { data } = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Emails]
+    });
+
+    console.log(data);
+    console.log("inside loadcontact");
+    };
+  useEffect(() => {
+    {
+      //this will call load contacts on every rendercycle- fix dependancy to something better || this would 
+      //help to keep contact list updated when someone adds a new contact inside phone, it should update??
+    }
+   loadContacts();
+  }, []);
+return (
     <View  style={{flex:1, backgroundColor:"#fff", paddingVertical:25}}>
       {/*hard coded padding to fix the notch and notification bar space, need a safeview area thing but for andriod */}
         <TextInput
@@ -31,5 +55,3 @@ export default function App() {
     
   );
 }
-
-
