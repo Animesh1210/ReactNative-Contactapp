@@ -48,7 +48,7 @@ export default function App() {
         style={{
           minHeight: 60,
           padding: 5,
-          backgroundColor: "#fff",
+          backgroundColor: "#3e607b",
           paddingLeft: 10,
           borderBottomWidth: 0.2,
         }}
@@ -76,13 +76,13 @@ export default function App() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff", paddingVertical: 25 }}>
+    <View style={{ flex: 1, backgroundColor: "#3e607b", paddingVertical: 25 }}>
       {/*hard coded padding to fix the notch and notification bar space*/}
       <TextInput
         placeholder="Search"
         placeholderTextColor={"#fff"}
         style={{
-          backgroundColor: "blue",
+          backgroundColor: "#01497c",
           height: 45,
           fontSize: 22,
           padding: 5,
@@ -96,7 +96,7 @@ export default function App() {
         value={searchTerm}
         onChangeText={setSearchTerm}
       />
-      <View style={{ flex: 1, backgroundColor: "#2f363c" }}>
+      <View style={{ flex: 1, backgroundColor: "#3e607b" }}>
         <FlatList
           data={ContactToDisplay}
           renderItem={({ item }) => <ContactItem item={item} />}
@@ -119,31 +119,32 @@ export default function App() {
         visible={selectedContact !== null}
         animationType="slide"
         onRequestClose={closeContactModal} //this handles when someone exits using back instead of given button
+        hardwareAccelerated={true} //should help with opening window faster
       >
-        <View
-          style={{ flex: 1}}
-        >
+        <View style={{ flex: 1,backgroundColor: "#70587c", padding: 20 }}>
           {selectedContact && (
             <View>
-              <Text style={{ color: "#000", fontWeight: "bold", fontSize: 40 }}>
+              <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 35 }}>
                 {selectedContact.firstName + " "}
                 {selectedContact.lastName}
               </Text>
               {selectedContact.phoneNumbers &&
                 selectedContact.phoneNumbers.length > 0 && (
-                  <Text style={{ color: "#000", fontWeight: "bold" }}>
+                  <Text style={{ color: "#fff", fontWeight: "bold", fontSize:30 }}>
                     {selectedContact.phoneNumbers[0].number}
                   </Text>
                 )}
             </View>
           )}
+          <View style={{marginTop:40}}>
           <Button
             onPress={closeContactModal}
-            style={{ marginTop: 20 }}
-            title="Close"
+            title="Back"
+            color="#841584"
           >
             <Text style={{ color: "#bad555", fontSize: 18 }}>Close</Text>
           </Button>
+          </View>
         </View>
       </Modal>
     </View>
