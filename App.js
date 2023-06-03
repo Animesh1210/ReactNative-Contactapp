@@ -1,63 +1,101 @@
-import {useEffect} from 'react';
-import {Text, View ,TextInput } from 'react-native';
-import * as Contacts from 'expo-contacts';
+import { useEffect, useState } from "react";
+import { Text, View, TextInput,FlatList} from "react-native";
+import * as Contacts from "expo-contacts";
 export default function App() {
-  {
-    /*
-As this blog by Brent Vatne says,
-expo-permissions has been deprecated in favor of module-specific permissions methods You should migrate from using Permissions.askAsync and Permissions.getAsync to the permissions methods exported by modules that require the permissions.
-For example: you should replace calls to Permissions.askAsync(Permissions.CAMERA) with Camera.requestPermissionsAsync()
-There shouldn’t be two ways to do an identical thing in a single SDK, and so we picked our preferred approach and are consolidating around it.
-*/
-  }
- const loadContacts = async () => {
+  const [contacts, setContacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const loadContacts = async () => {
+    //here I take permission for contact app&& save its state
     const permission = await Contacts.requestPermissionsAsync();
     {
       //fixed the deprecated way of fetching pemission
+      if (permission.status !== "granted") {
+        return;
+      }
     }
-    if (permission.status !== 'granted') {
-      return;
-    }
-
     const { data } = await Contacts.getContactsAsync({
-      fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Emails]  
+      fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+      //this should in theory save only name and phone number from objects, but it saves much more, beyond my understanding for now
+      //maybe the api returns some fields by default no matter what
     });
-
     console.log(data);
-    };
+    setContacts(data);
+  };
+  const ContactToDisplay = contacts.filter((contact) => {
+    ///this filters the contact to display, kinda 2 in 1 job, shows every contact when no query||shows filtered contacts which pass the query  
+    const fullName = `${contact.firstName}+${contact.lastName}`.toLowerCase();
+    return fullName.includes(searchTerm.toLowerCase());
+  });
+  const ContactItem = ({ item }) => (
+    //this is just to iterate over flatlist ig? picked this from native docs
+    <View style={{ minHeight: 70, padding: 5 }}>
+        <Text style={{ color: '#bada55', fontWeight: 'bold', fontSize: 40 }}>
+          {item.firstName + ' '}
+          {item.lastName}
+        </Text>
+        {item.phoneNumbers && item.phoneNumbers.length > 0 && (
+          <Text style={{ color: 'white', fontWeight: 'bold' }}>
+            {item.phoneNumbers[0].number}
+          </Text>
+        )}
+    </View>
+    
+);
   useEffect(() => {
     {
-      //this will call load contacts on every rendercycle- fix dependancy to something better || this would 
+      //this will call load contacts on every rendercycle- fix dependancy to something better || this would
       //help to keep contact list updated when someone adds a new contact inside phone, it should update??
     }
-   loadContacts();
+    loadContacts();
   }, []);
-return (
-    <View  style={{flex:1, backgroundColor:"#fff", paddingVertical:25}}>
+
+  return (
+    <View style={{ flex: 1, backgroundColor: "#fff", paddingVertical: 25 }}>
       {/*hard coded padding to fix the notch and notification bar space, need a safeview area thing but for andriod */}
-        <TextInput
-        placeholder='Search'
+      <TextInput
+        placeholder="Search"
         placeholderTextColor={"#fff"}
         style={{
           backgroundColor: "#5C5B5B",
-          height:45,
+          height: 45,
           fontSize: 22,
           padding: 5,
           paddingLeft: 10,
           borderRadius: 180,
-          marginTop:10,
-          margin:5,
+          marginTop: 10,
+          margin: 5,
           // borderColor:"#fff",
           // borderWidth:0.2
-         }}
+        }}
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+      />
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fff" /*just to check the area im working with*/,
+        }}
+      >
+        <FlatList
+          data={ContactToDisplay}
+          renderItem={({ item }) => <ContactItem item={item} />}
+          //this calls a render pr contact ,a predefined cardish render, mapping each contact to it and looping over it
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 50
+              }}
+            >
+              <Text style={{ color: '#000' }}>No Contacts Found</Text>
+            </View>
+          )}
         />
-        <View style={{flex:1,backgroundColor:"#fff" /*just to check the area im working with*/}}> 
-         <Text>
-          inside second panel
-         </Text>
-        </View>
-
+      </View>
     </View>
-    
   );
 }
