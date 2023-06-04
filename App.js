@@ -9,8 +9,9 @@ import {
   Button,
 } from "react-native";
 import * as Contacts from "expo-contacts";
+import { MaterialIcons } from "@expo/vector-icons";
 export default function App() {
-  const [contacts, setContacts] = useState([]);    
+  const [contacts, setContacts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedContact, setSelectedcontact] = useState(null);
 
@@ -74,28 +75,43 @@ export default function App() {
     }
     loadContacts();
   }, []);
+  const clearSearchTerm = () => {
+    setSearchTerm("");
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#3e607b", paddingVertical: 28 }}>
       {/*hard coded padding to fix the notch and notification bar space*/}
-      <TextInput
-        placeholder="Search"
-        placeholderTextColor={"#fff"}
+      <View
         style={{
+          flexDirection: "row",
+          alignItems: "center",
           backgroundColor: "#01497c",
           height: 45,
-          fontSize: 22,
-          padding: 5,
-          paddingLeft: 10,
           borderRadius: 180,
           marginTop: 10,
           margin: 5,
-          // borderColor:"#fff",
-          // borderWidth:0.2
         }}
-        value={searchTerm}
-        onChangeText={setSearchTerm}
-      />
+      >
+        <TextInput
+          placeholder="Search"
+          placeholderTextColor="#fff"
+          style={{
+            flex: 1,
+            fontSize: 22,
+            padding: 5,
+            paddingLeft: 10,
+            color: "#fff",
+          }}
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+        {searchTerm.length > 0 ? ( //to hide button when no button text inside field
+          <Pressable onPress={clearSearchTerm} style={{ paddingRight: 10 }}>
+            <MaterialIcons name="close" size={24} color="#fff" />
+          </Pressable>
+        ) : null}
+      </View>
       <View style={{ flex: 1, backgroundColor: "#3e607b" }}>
         <FlatList
           data={ContactToDisplay}
