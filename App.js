@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import * as Contacts from "expo-contacts";
 export default function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState([]);    
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedContact, setSelectedcontact] = useState(null);
 
@@ -65,7 +65,7 @@ export default function App() {
       </View>
     </Pressable>
   );
-  console.log(selectedContact); 
+  console.log(selectedContact);
 
   useEffect(() => {
     {
@@ -76,7 +76,7 @@ export default function App() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#3e607b", paddingVertical: 25 }}>
+    <View style={{ flex: 1, backgroundColor: "#3e607b", paddingVertical: 28 }}>
       {/*hard coded padding to fix the notch and notification bar space*/}
       <TextInput
         placeholder="Search"
@@ -121,29 +121,27 @@ export default function App() {
         onRequestClose={closeContactModal} //this handles when someone exits using back instead of given button
         hardwareAccelerated={true} //should help with opening window faster
       >
-        <View style={{ flex: 1,backgroundColor: "#70587c", padding: 20 }}>
+        <View style={{ flex: 1, backgroundColor: "#0d3d56", padding: 20 }}>
           {selectedContact && (
             <View>
-              <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 35 }}>
+              <Text style={{ color: "#000", fontWeight: "bold", fontSize: 25 }}>
                 {selectedContact.firstName + " "}
                 {selectedContact.lastName}
               </Text>
               {selectedContact.phoneNumbers &&
                 selectedContact.phoneNumbers.length > 0 && (
-                  <Text style={{ color: "#fff", fontWeight: "bold", fontSize:30 }}>
+                  <Text
+                    style={{ color: "#000", fontWeight: "bold", fontSize: 22 }}
+                  >
                     {selectedContact.phoneNumbers[0].number}
                   </Text>
                 )}
             </View>
           )}
-          <View style={{marginTop:40}}>
-          <Button
-            onPress={closeContactModal}
-            title="Back"
-            color="#841584"
-          >
-            <Text style={{ color: "#bad555", fontSize: 18 }}>Close</Text>
-          </Button>
+          <View style={{ marginTop: 40 }}>
+            <Button onPress={closeContactModal} title="Back" color="#841584">
+              <Text style={{ color: "#bad555", fontSize: 18 }}>Close</Text>
+            </Button>
           </View>
         </View>
       </Modal>
