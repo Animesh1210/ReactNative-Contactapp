@@ -7,6 +7,7 @@ import {
   Pressable,
   Modal,
   Button,
+  StatusBar,
 } from "react-native";
 import * as Contacts from "expo-contacts";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -80,8 +81,9 @@ export default function App() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#3e607b", paddingVertical: 28 }}>
-      {/*hard coded padding to fix the notch and notification bar space*/}
+    <View style={{ flex: 1, backgroundColor: "#3e607b" }}>
+      
+      <StatusBar backgroundColor="#002b4a" barStyle="light-content" />
       <View
         style={{
           flexDirection: "row",
@@ -101,7 +103,7 @@ export default function App() {
             fontSize: 22,
             padding: 5,
             paddingLeft: 10,
-            color: "#fff",
+            color: "#3e607b",
           }}
           value={searchTerm}
           onChangeText={setSearchTerm}
@@ -156,7 +158,7 @@ export default function App() {
           )}
           <View style={{ marginTop: 40 }}>
             <Button onPress={closeContactModal} title="Back" color="#841584">
-              <Text style={{ color: "#bad555", fontSize: 18 }}>Close</Text>
+              <Text style={{ color: "#000", fontSize: 18 }}>Close</Text>
             </Button>
           </View>
         </View>
