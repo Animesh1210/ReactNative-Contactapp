@@ -7,6 +7,13 @@ React Native contacts app
 
 # React native's documentation is very clean and easy to grasp, so is expo's.   (which was certainly helpful)
 
+![WhatsApp Image 2023-06-20 at 15 13 44](https://github.com/Animesh1210/pro-edge/assets/104519766/efc73114-f0ff-4c59-98ca-302cae0f272f)
+
+![WhatsApp Image 2023-06-20 at 15 13 44(1)](https://github.com/Animesh1210/pro-edge/assets/104519766/a92b1458-0d38-40a3-a1cb-6b02253b22ad)
+
+![WhatsApp Image 2023-06-20 at 15 13 45](https://github.com/Animesh1210/pro-edge/assets/104519766/341143e6-fe25-4bdb-adb4-a6e16325961f)
+
+![WhatsApp Image 2023-06-20 at 15 13 45(1)](https://github.com/Animesh1210/pro-edge/assets/104519766/f6697f11-d6f7-4b60-b028-8402444dc318)
 
 ## I used expo's in built component (expo-contacts) to manage contacts- I felt this was important as working with dummmy contact array felt pointless.
 ### expo-contact had the functionality to ask the user for permission and to read the contacts from phone.
