@@ -1,6 +1,6 @@
 ##to run either Install .apk || run npx expo start ( make sure to install dependencies from npm) and run through expo-go
 
-# pro-edge    
+# Contact-App 
 React Native contacts app
 ##First time creating in ReactNative, previous knowledge of React certainly helped here.
 ###I've developed this using expo go and using my phone as the build tester
